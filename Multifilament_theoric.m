@@ -88,9 +88,11 @@ end
 
 Mpf=pinv(Mfp);
 I_filament=Mpf*(Mirnv_B_exp_corr');
+I_filament_uncrr=Mpf*(Mirnv_B_exp');
 
 %% Calculate Biot-Savart with the current values from SVD decomposition
 xx_multi_SVD=BmagnMultiModule_correct(I_filament,R_filaments,z_filaments,R_mirn,z_mirn,nfil);
+xx_multi_SVD_uncrr=BmagnMultiModule_correct(I_filament_uncrr,R_filaments,z_filaments,R_mirn,z_mirn,nfil);
 
 % for i=1:12
 %    xx_multi_theo(i) =0;
@@ -106,10 +108,12 @@ RMSE_optim_theo=sqrt(mean((xx_multi_SVD(:)-Mirnv_B_exp_corr(:)).^2));
 
 %% Compute Centroid position
 I_filament_all=Mpf*(data.mirnv_corr_flux)/(49*50*1e-6);
+I_filament_all_uncrr=Mpf*(data.mirnv_corr)/(49*50*1e-6);
 for(i=1:length(I_filament_all))
 z0(i)=0.01*sum((z_filaments'.*I_filament_all(:,i)))./sum(I_filament_all(:,i));
 r0(i)=0.01*sqrt(sum((R_filaments'.^2).*I_filament_all(:,i))./sum(I_filament_all(:,i)))-0.46;
 sumIfil(i)=sum(I_filament_all(:,i));
+sumIfil_uncrr(i)=sum(I_filament_all_uncrr(:,i));
 end
 
 for(i=1:length(z0))
@@ -137,11 +141,12 @@ figure(9)
 plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*Mirnv_B_exp_corr ,'-o')
 hold on
 plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_SVD,'-s')
+plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_SVD_uncrr,'-*')
 % plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_corr,'-*')
 % plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*Mfp*I_filament,'-s')
 grid on
 title(['Shot #45410  t= ',num2str(time_ins), '  Ip= (Multifilament flux corrected)'])
-legend('Experimental Data corrected','Multifilament SVD-Mpf','Fminsearch')
+legend('Experimental Data corrected','corrected SVD','SVD')
 xlabel('Mirnov #')
 ylabel('Optimization [mT]')
 axis equal
@@ -149,11 +154,12 @@ axis equal
 figure(10)
 plot(time,sumIfil)
 hold on
+plot(time,sumIfil_uncrr)
 plot(time,data.Ip_magn)
 grid on
 xlabel('Time [ms]')
 ylabel('Current [A]')
-legend('sum (I fil)','Plasma current')
+legend('sum (Ifil) corrctd','sum(Ifil)','Plasma current')
 
 %%
 figure(3)
