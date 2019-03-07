@@ -179,11 +179,11 @@ ylabel('Z[cm]')
 grid on
 axis equal
 toc
-return
+
 
 
 figure(1)
-plot(time,R0)
+plot(time,r0)
 grid on
 xlabel('Time [ms]')
 ylabel('Position [m]')
