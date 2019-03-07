@@ -29,8 +29,8 @@ z_plsm= 0;
 
 
 degr=30;
-radius=6.5; %%% in [cm] (distance from the center of the chamber to the filaments)
-nfil=8; %%% Number of filaments
+radius=5.5; %%% in [cm] (distance from the center of the chamber to the filaments)
+nfil=12; %%% Number of filaments
 deg_fact=360/(nfil);
 
 for i=1:nfil
@@ -39,20 +39,12 @@ for i=1:nfil
     degr=degr+deg_fact;
 end
 
-radius=4;
-degr=0;
-for i=nfil+1:2*nfil
-    R_filaments(i)=(46)+radius*cosd(degr);
-    z_filaments(i)=radius*sind(degr);
-    degr=degr+deg_fact;
-end
 
-nfil=16;
 
 %%%Experimental mesurements[Wb]
 
 %Mirnv_10_fact=1.2803;
-time_ins=220;
+time_ins=360;
 time_index=find(time == time_ins); %%% Select a time moment where there is plasma current! in [ms]
 
 %%%%%%%%%% Find the exprimental values for that time moment
