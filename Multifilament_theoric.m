@@ -28,7 +28,7 @@ R_pls=46;
 z_plsm= 0;
 
 
-degr=30;
+degr=0;
 radius=5.5; %%% in [cm] (distance from the center of the chamber to the filaments)
 nfil=12; %%% Number of filaments
 deg_fact=360/(nfil);
@@ -79,6 +79,7 @@ for i=1:12
 end
 
 Mpf=pinv(Mfp);
+% Mpf=inv(Mfp);
 I_filament=Mpf*(Mirnv_B_exp_corr');
 I_filament_uncrr=Mpf*(Mirnv_B_exp');
 
