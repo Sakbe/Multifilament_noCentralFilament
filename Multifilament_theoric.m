@@ -170,8 +170,8 @@ end
 
 
 end
-plot([35,57],[0,0])
-plot([46,46],[-9,9],'k')
+% plot([35,57],[0,0])
+% plot([46,46],[-9,9],'k')
 text(57,0,'LFS','FontSize',15)
 text(33,0,'HFS','FontSize',15)
 ylim([-11,11])
@@ -181,7 +181,7 @@ grid on
 axis equal
 toc
 
-
+%%
 
 figure(1)
 plot(time,r0)
