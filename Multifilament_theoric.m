@@ -217,13 +217,8 @@ ylabel('Z[cm]')
 grid on
 axis equal
 toc
-<<<<<<< HEAD
 %%
 
-=======
-
-%%
->>>>>>> a1512301c4942a96f47983a7e144a2c85859ef28
 
 figure(1)
 plot(time,r0)
