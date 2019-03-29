@@ -5,7 +5,7 @@ tic
 close all
 clear all
 %%% Load Shot
-load('shot_45860.mat');
+load('shot_46104.mat');
 time=1e-3*data.time; %%%% time in ms
 
 
@@ -28,7 +28,7 @@ R_pls=46;
 z_plsm= 0;
 
 
-degr=0;
+degr=30;
 radius=5.5; %%% in [cm] (distance from the center of the chamber to the filaments)
 nfil=12; %%% Number of filaments
 deg_fact=360/(nfil);
@@ -44,7 +44,7 @@ end
 %%%Experimental mesurements[Wb]
 
 %Mirnv_10_fact=1.2803;
-time_ins=360;
+time_ins=160;
 time_index=find(time == time_ins); %%% Select a time moment where there is plasma current! in [ms]
 
 %%%%%%%%%% Find the exprimental values for that time moment
@@ -134,25 +134,62 @@ figure(9)
 plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*Mirnv_B_exp_corr ,'-o')
 hold on
 plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_SVD,'-s')
-plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_SVD_uncrr,'-*')
+% plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_SVD_uncrr,'-*')
 % plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*xx_multi_corr,'-*')
 % plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*Mfp*I_filament,'-s')
 grid on
-title(['Shot #45410  t= ',num2str(time_ins), '  Ip= (Multifilament flux corrected)'])
-legend('Experimental Data corrected','corrected SVD','SVD')
+title(['Shot #46104  t= ',num2str(time_ins), '[ms]  Magnetic Probes'])
+legend('Experimental Data ',' SVD reconstruction')
 xlabel('Mirnov #')
 ylabel('Optimization [mT]')
 axis equal
-
+%%
+close all
+figure(11)
+plot(time,data.mirnv_corr_flux(1,:))
+hold on
+plot(time,data.mirnv_SVD_recons(1,:))
+xlabel('Time [ms]')
+ylabel('Magnetic flux [Wb]')
+title(['Shot #46104   Magnetic Probe #1'])
+legend('Mirnv #1 flux corrected','Mirnv #1 SVD reconstruction ')
+xlim([0 1100])
+grid on
+%%
+close all
+figure(16)
+index1=find(time == 205.5)
+index2=find(time == 258.1)
+suptitle('Shot # 46104')
+subplot(3,1,1)
+plot(time(index1:index2),data.Ip_magn(index1:index2))
+ylabel('Current [A]')
+title('Plasma current')
+grid on
+subplot(3,1,2)
+plot(time(index1:index2),data.R0(index1:index2))
+ylabel('Position [m]')
+title('Radial Centroid Position')
+grid on
+subplot(3,1,3)
+plot(time(index1:index2),data.z0(index1:index2))
+xlabel('Time [ms]')
+ylabel('Position [m]')
+title('Vertical Centroid Position')
+grid on
+%%
+%%
+close all
 figure(10)
 plot(time,sumIfil)
 hold on
-plot(time,sumIfil_uncrr)
+% plot(time,sumIfil_uncrr)
 plot(time,data.Ip_magn)
 grid on
 xlabel('Time [ms]')
 ylabel('Current [A]')
-legend('sum (Ifil) corrctd','sum(Ifil)','Plasma current')
+legend('\Sigma(I_{fil})','Plasma current')
+title('Shot #45680 Plasma Current')
 
 %%
 figure(3)
@@ -170,8 +207,8 @@ end
 
 
 end
-plot([35,57],[0,0])
-plot([46,46],[-9,9],'k')
+% plot([35,57],[0,0])
+% plot([46,46],[-9,9],'k')
 text(57,0,'LFS','FontSize',15)
 text(33,0,'HFS','FontSize',15)
 ylim([-11,11])
@@ -180,7 +217,7 @@ ylabel('Z[cm]')
 grid on
 axis equal
 toc
-
+%%
 
 
 figure(1)
