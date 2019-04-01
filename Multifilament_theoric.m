@@ -129,6 +129,7 @@ end
 
 
 %% Plotting
+
 close all
 figure(9)
 plot([1,2,3,4,5,6,7,8,9,10,11,12],1000*Mirnv_B_exp_corr ,'-o')
@@ -233,3 +234,10 @@ grid on
 xlabel('Time [ms]')
 ylabel('Position [m]')
 title('Vertical centroid position')
+
+%% Plot of all the filament currents
+
+figure(99)
+plot(time, I_filament_all)
+grid on
+%%
